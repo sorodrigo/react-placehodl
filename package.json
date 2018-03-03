@@ -1,7 +1,7 @@
 {
   "name": "react-placehodl",
   "version": "0.1.0",
-  "description": "Placeholders in react made simple.",
+  "description": "React placeholders made simple.",
   "source": "src/index.js",
   "main": "lib/index.js",
   "scripts": {

@@ -25,6 +25,7 @@
     "no-debugger": 2,
     "comma-dangle": ["error", "never"],
     "react/require-default-props": 0,
-    "react/sort-comp": 0
+    "react/sort-comp": 0,
+    "react/no-array-index-key": ["warn"]
   }
 }

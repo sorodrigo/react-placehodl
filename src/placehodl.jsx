@@ -21,8 +21,11 @@ class Placehodl extends React.Component {
       <div className={`${prefix}-line`}>
         {Array(words)
           .fill(0)
-          .map(() => (
-            <div className={`${prefix}-word ${this.getSize(size)}`} />
+          .map((w, i) => (
+            <div
+              key={`${prefix}-word-${i}`}
+              className={`${prefix}-word ${this.getSize(size)}`}
+            />
           ))}
       </div>
     );
@@ -34,7 +37,11 @@ class Placehodl extends React.Component {
       <div className={`${prefix}-paragraph`}>
         {Array(lines)
           .fill(0)
-          .map(() => this.getLine(words, size))}
+          .map((l, i) => (
+            <React.Fragment key={`${prefix}-paragraph-${i}`}>
+              {this.getLine(words, size)}
+            </React.Fragment>
+          ))}
       </div>
     );
   };
