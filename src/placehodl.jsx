@@ -12,12 +12,28 @@ class Placehodl extends React.Component {
     return this.sizes[index];
   };
 
+  getLine = (words = 3, size) =>
+    Array(words)
+      .fill(0)
+      .map(() => (
+        <div className={`react-placehodl-word ${this.getSize(size)}`} />
+      ));
+
+  getParagraph = (lines = 3, words, size) =>
+    Array(lines)
+      .fill(0)
+      .map(() => (
+        <div className={`react-placehodl-paragraph ${this.getSize(size)}`}>
+          {this.getLine(words)}
+        </div>
+      ));
+
   render() {
     const { children, className } = this.props;
-    const { getSize } = this;
+    const { getSize, getLine, getParagraph } = this;
     return (
       <div className={`react-placehodl ${className}`}>
-        {children({ getSize })}
+        {children({ getSize, getLine, getParagraph })}
       </div>
     );
   }
