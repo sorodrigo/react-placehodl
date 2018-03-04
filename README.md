@@ -23,6 +23,7 @@ that a placeholder is the perfect use case for them.
 ### Props
 The `<Placehodl />` component has the following props:
 - seed => Seed for the size randomizer. (Powered by _fast-random_).
+- sizes => Array of size classNames that will be applies to each word.
 - prefix => Prefix used in all elements classes.
 - className => Root level class name.
 - children => Function that gets passed the generator methods.
@@ -49,52 +50,77 @@ getLine(words: int, size: int) => (line: jsx)
 getSize(size: int) => (className: string)
 ```
 
-### Example
+## Examples
+
+### Use of getParagraph (works out of the box use case)
 ```jsx
  import Placehodl from 'react-placehodl';
-
+ 
+ // outputs paragraph with 10 lines, 3 words, 5 sizes
  const Placeholder = props => {
    return (
      <Placehodl seed={props.seed} prefix="my-placeholder">
-       {({ getParagraph, getLine, getSize }) => (
-         <React.Fragment>
-           {/* outputs paragraph with 10 lines, 3 words, 5 sizes */}
-           {getParagraph(10, 3, 5)}
-           <div className="placeholder-paragraph">
-             {Array(10)
-               .fill(0)
-               .map((line, i) => (
-                 <div
-                   key={`placeholder-line-container-${i}`}
-                   className="placeholder-line-container"
-                 >
-                   {/* outputs line with 3 words, 5 sizes */}
-                   {getLine(3, 5)}
-                   <Icon name="info" />
-                 </div>
-               ))}
-           </div>
-           <div className="placeholder-paragraph">
-             {Array(10)
-               .fill(0)
-               .map((line, i) => (
-                 <div key={`placeholer-line-${i}`} className="placeholder-line">
-                   {Array(3)
-                     .fill(0)
-                     .map((word, j) => (
-                       <div
-                         key={`placeholder-word-${j}`}
-                         className={`placeholder-line-container ${getSize(5)}`}
-                       >
-                         {/* outputs word 5 possible sizes */}
-                       </div>
-                     ))}
-                 </div>
-               ))}
-           </div>
-         </React.Fragment>
-       )}
+       {({ getParagraph }) => getParagraph(10, 3, 5)}
      </Placehodl>
    );
  };
+```
+
+### Use of getLine (medium customization use case)
+```jsx
+  import Placehodl from 'react-placehodl';
+  
+  // outputs line with 3 words, 5 sizes
+  const Placeholder = props => {
+    return (
+      <Placehodl seed={props.seed} prefix="my-placeholder">
+        {({ getLine }) => (
+          <div className="my-placeholder-paragraph">
+            {Array(10)
+              .fill(0)
+              .map((line, i) => (
+                <div
+                  key={`placeholder-line-container-${i}`}
+                  className="my-placeholder-line-container"
+                >
+                  {getLine(3, 5)}
+                  <Icon name="info" />
+                </div>
+              ))}
+          </div>
+        )}
+      </Placehodl>
+    );
+  };
+```
+
+### Use of getSize (advanced customization use case)
+```jsx
+import Placehodl from 'react-placehodl';
+
+// outputs word 5 possible sizes
+const Placeholder = props => {
+  return (
+    <Placehodl seed={props.seed} prefix="my-placeholder">
+      {({ getLine }) => (
+        <div className="my-placeholder-paragraph">
+          {Array(10)
+            .fill(0)
+            .map((line, i) => (
+              <div key={`placeholer-line-${i}`} className="my-placeholder-line">
+                {Array(3)
+                  .fill(0)
+                  .map((word, j) => (
+                    <div
+                      key={`placeholder-word-${j}`}
+                      className={`my-placeholder-line-container ${getSize(5)}`}
+                    />
+                  ))}
+              </div>
+            ))}
+        </div>
+      )}
+    </Placehodl>
+  );
+};
 ```
