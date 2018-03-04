@@ -4,15 +4,22 @@ import frand from 'fast-random';
 
 class Placehodl extends React.Component {
   generator = frand(this.props.seed);
-  sizes = ['small', 'medium', 'large', 'xsmall', 'xlarge'];
 
   componentDidUpdate() {
-    this.generator = frand(this.props.seed);
+    this.generator.seed(this.props.seed);
   }
 
   getSize = (size = 3) => {
+    const { sizes } = this.props;
+    if (size > sizes.length) {
+      throw new Error(
+        `Index (${
+          sizes.length
+        } % ${size}) may not be available in [${sizes}]. Use only a size <= sizes.length`
+      );
+    }
     const index = parseInt(this.generator.nextInt(), 10) % size;
-    return this.sizes[index];
+    return sizes[index];
   };
 
   getLine = (words = 3, size) => {
@@ -37,11 +44,13 @@ class Placehodl extends React.Component {
       <div className={`${prefix}-paragraph`}>
         {Array(lines)
           .fill(0)
-          .map((l, i) => (
-            <React.Fragment key={`${prefix}-paragraph-${i}`}>
-              {this.getLine(words, size)}
-            </React.Fragment>
-          ))}
+          .map((l, i) =>
+            React.createElement(
+              // Use createElement instead of using a Fragment for React <= 15 compatibility
+              () => this.getLine(words, size),
+              { key: `${prefix}-paragraph-${i}` }
+            )
+          )}
       </div>
     );
   };
@@ -61,11 +70,13 @@ Placehodl.propTypes = {
   seed: PropTypes.number,
   className: PropTypes.string,
   children: PropTypes.func.isRequired,
-  prefix: PropTypes.string
+  prefix: PropTypes.string,
+  sizes: PropTypes.arrayOf(PropTypes.string)
 };
 
 Placehodl.defaultProps = {
-  prefix: 'react-placehodl'
+  prefix: 'react-placehodl',
+  sizes: ['small', 'medium', 'large', 'xsmall', 'xlarge']
 };
 
 export default Placehodl;
