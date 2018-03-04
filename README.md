@@ -102,7 +102,7 @@ import Placehodl from 'react-placehodl';
 const Placeholder = props => {
   return (
     <Placehodl seed={props.seed} prefix="my-placeholder">
-      {({ getLine }) => (
+      {({ getSize }) => (
         <div className="my-placeholder-paragraph">
           {Array(10)
             .fill(0)
