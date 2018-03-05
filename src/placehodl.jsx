@@ -5,8 +5,8 @@ import frand from 'fast-random';
 class Placehodl extends React.Component {
   generator = frand(this.props.seed);
 
-  componentDidUpdate() {
-    this.generator.seed(this.props.seed);
+  componentWillUpdate() {
+    this.generator = frand(this.props.seed);
   }
 
   getSize = (size = 3) => {
