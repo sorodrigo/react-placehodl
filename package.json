@@ -4,6 +4,7 @@
   "description": "React placeholders made simple.",
   "source": "src/index.js",
   "main": "lib/index.js",
+  "files": ["lib"],
   "scripts": {
     "build": "babel ./src --out-dir ./lib",
     "build:watch": "babel ./src --out-dir ./lib --watch",
