@@ -1,4 +1,4 @@
-# react-placehodl
+# react-placehodl 📌
 React placeholders made simple.
 
 ![react-placehodl](placehodl.gif)
@@ -23,7 +23,7 @@ that a placeholder is the perfect use case for them.
 ### Props
 The `<Placehodl />` component has the following props:
 - seed => Seed for the size randomizer. (Powered by _fast-random_).
-- sizes => Array of size classNames that will be applies to each word.
+- sizes => Array of size classNames that will be applied to each word.
 - prefix => Prefix used in all elements classes.
 - className => Root level class name.
 - children => Function that gets passed the generator methods.
