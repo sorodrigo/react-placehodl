@@ -1,4 +1,6 @@
 # react-placehodl 📌
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/sorodrigo/react-placehodl.svg)](https://greenkeeper.io/)
 React placeholders made simple.
 
 ![react-placehodl](placehodl.gif)
