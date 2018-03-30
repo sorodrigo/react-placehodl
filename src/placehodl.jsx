@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import frand from 'fast-random';
 
 class Placehodl extends React.Component {
+  static createKeyedElement(fn, key) {
+    // Use createElement instead of using a Fragment for React <= 15 compatibility
+    return React.createElement(fn, { key });
+  }
+
   generator = frand(this.props.seed);
 
   componentWillUpdate() {
@@ -22,35 +27,40 @@ class Placehodl extends React.Component {
     return sizes[index];
   };
 
-  getLine = (words = 3, size) => {
+  getLine = (words = 3, size, shimmer) => {
     const { prefix } = this.props;
     return (
-      <div className={`${prefix}-line`}>
+      <b className={`${prefix}-line`}>
         {Array(words)
           .fill(0)
           .map((w, i) => (
-            <div
+            <b
               key={`${prefix}-word-${i}`}
               className={`${prefix}-word ${this.getSize(size)}`}
             />
           ))}
-      </div>
+        {shimmer && <b className={`${prefix}-line-end`} />}
+      </b>
     );
   };
 
-  getParagraph = (lines = 3, words, size) => {
+  getParagraph = (lines = 3, words, size, shimmer) => {
     const { prefix } = this.props;
+    const separator = shimmer && <b className={`${prefix}-line-separator`} />;
     return (
       <div className={`${prefix}-paragraph`}>
         {Array(lines)
           .fill(0)
-          .map((l, i) =>
-            React.createElement(
-              // Use createElement instead of using a Fragment for React <= 15 compatibility
-              () => this.getLine(words, size),
-              { key: `${prefix}-paragraph-${i}` }
+          .map((l, i) => [
+            Placehodl.createKeyedElement(
+              () => separator,
+              `${prefix}-line-separator-${i}`
+            ),
+            Placehodl.createKeyedElement(
+              () => this.getLine(words, size, shimmer),
+              `${prefix}-line-${i}`
             )
-          )}
+          ])}
       </div>
     );
   };
